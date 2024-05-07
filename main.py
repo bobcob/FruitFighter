@@ -1,14 +1,18 @@
+import random
+
 import pygame
+import time
 from Test import Test
 
 pygame.init()
 pygame.font.init()
 my_font = pygame.font.SysFont('Arial', 15)
-pygame.display.set_caption("")
+pygame.display.set_caption("Fruit Fighter")
 size = (1000, 600)
 screen = pygame.display.set_mode(size)
-
+current_time = time.time() - time.time()
 test = Test(50,50)
+move = False
 
 
 run = True
@@ -18,6 +22,17 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.KEYDOWN:
+            test.move()
+            print("ches")
+            move = True
+    if move:
+        print("chis")
+        while test.x != 50:
+            test.x -= 1
+        move = False
+
+
 
     screen.fill((0, 0, 0))
 
