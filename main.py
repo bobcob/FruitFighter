@@ -18,19 +18,20 @@ move = False
 run = True
 
 while run:
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_d]:
+        test.move_direction("right")
+    if keys[pygame.K_a]:
+        test.move_direction("left")
+    # if keys[pygame.K_f]:
+    #     test.attack()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.KEYDOWN:
-            test.move()
-            print("ches")
-            move = True
-    if move:
-        print("chis")
-        while test.x != 50:
-            test.x -= 1
-        move = False
+        if event.type == pygame.KEYUP and keys[pygame.K_f]:
+            test.attack()
+
 
 
 
