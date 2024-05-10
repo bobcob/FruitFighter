@@ -17,13 +17,6 @@ class Test:
         scale_size = (self.image_size[0] * .5, self.image_size[1] * .5)
         self.image = pygame.transform.scale(self.image, scale_size)
 
-    def move_direction(self, direction):
-
-        if direction == "right":
-            self.x = self.x + self.delta
-        if direction == "left":
-            self.x = self.x - self.delta
-        self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
 
     def attack(self):
         initial = self.x
