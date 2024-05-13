@@ -43,10 +43,10 @@ while run:
             attack = True
             attack_cd = True
     if attack_cd:
-        cd = time.time() - start_time
-        if cd >= 3.5:
+        cd += 1
+        if cd >= 300:
             attack_cd = False
-            cd =0
+            cd = 0
         display_cd = my_font.render(str(cd), True, (255, 255, 255))
 
 
