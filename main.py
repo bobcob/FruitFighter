@@ -32,8 +32,6 @@ hit = False
 hit2 = False
 a_move = True
 b_move = True
-display_time = my_font.render(str(current_time), True, (255, 255, 255))
-display_cd = my_font.render(str(cd), True, (255, 255, 255))
 
 run = True
 
@@ -46,8 +44,10 @@ while run:
 
     if a_move:
         if keys[pygame.K_d]:
+            print("jij")
             apple.move_direction("right")
         if keys[pygame.K_a]:
+            print("jjahd")
             apple.move_direction("left")
 
     if b_move:
@@ -62,55 +62,40 @@ while run:
         if event.type == pygame.KEYUP:
             if keys[pygame.K_f]:
                 a_attack = True
-                a_attack_cd = True
+
             elif keys[pygame.K_m]:
                 b_attack = True
-                b_attack_cd = True
 
-    if a_attack_cd:
+
+    if a_attack:
         cd += 1
         a_move = False
+        if test.rect.colliderect(banana.rect):
+            b_move = False
         if cd >= 150:
             a_attack = False
-            a_attack_cd = False
             a_move = True
+            b_move = True
             cd = 0
 
-    if b_attack_cd:
+    if b_attack:
         cd2 += 1
         b_move = False
+        if test2.rect.colliderect(apple.rect):
+            a_move = False
         if cd2 >= 150:
             b_attack = False
-            b_attack_cd = False
             b_move = True
+            a_move = True
             cd2 = 0
 
-    if test.rect.colliderect(banana.rect) and a_attack:
-        stun2 += 1
-        b_move = False
-        hit2 = True
-        if stun2 >= 200:
-            hit2 = False
-            b_move = True
-            stun2 = 0
-
-    if test2.rect.colliderect(apple.rect) and b_attack:
-        stun += 1
-        a_move = False
-        hit = True
-        if stun >= 200:
-            hit = False
-            a_move = True
-            stun = 0
 
     screen.fill((0, 0, 0))
     screen.blit(apple.image, apple.rect)
     screen.blit(banana.image, banana.rect)
-    screen.blit(display_time, (0, 45))
-    screen.blit(display_cd, (0, 15))
-    if a_attack and a_attack_cd:
+    if a_attack:
         screen.blit(test.image, test.rect)
-    if b_attack and b_attack_cd:
+    if b_attack:
         screen.blit(test2.image, test2.rect)
 
     pygame.display.update()
