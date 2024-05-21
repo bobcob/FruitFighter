@@ -19,11 +19,14 @@ test = Test(50,50)
 test2 = Test(350, 50)
 apple = Apple(50,150)
 banana = Banana(400, 150)
-move = False
+
+game_start = False
 a_attack = False
 a_attack_cd = False
 b_attack = False
 b_attack_cd = False
+a_hp = 100
+b_hp = 100
 cd = 0
 cd2 = 0
 stun = 0
@@ -32,6 +35,14 @@ hit = False
 hit2 = False
 a_move = True
 b_move = True
+a_hit = False
+b_hit = False
+
+
+
+display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
+display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
+
 
 run = True
 
@@ -44,11 +55,11 @@ while run:
 
     if a_move:
         if keys[pygame.K_d]:
-            print("jij")
             apple.move_direction("right")
         if keys[pygame.K_a]:
-            print("jjahd")
             apple.move_direction("left")
+        if keys[pygame.K_w]:
+            apple.move_direction("jump")
 
     if b_move:
         if keys[pygame.K_RIGHT]:
@@ -72,6 +83,11 @@ while run:
         a_move = False
         if test.rect.colliderect(banana.rect):
             b_move = False
+            b_hit = True
+        if b_hit:
+            b_hp -= 5
+            display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
+            b_hit = False
         if cd >= 150:
             a_attack = False
             a_move = True
@@ -83,6 +99,11 @@ while run:
         b_move = False
         if test2.rect.colliderect(apple.rect):
             a_move = False
+            a_hit = True
+        if a_hit:
+            a_hp -= 5
+            display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
+            screen.blit(display_ahp, (0, 0))
         if cd2 >= 150:
             b_attack = False
             b_move = True
@@ -93,6 +114,8 @@ while run:
     screen.fill((0, 0, 0))
     screen.blit(apple.image, apple.rect)
     screen.blit(banana.image, banana.rect)
+    screen.blit(display_ahp, (0,0))
+    screen.blit(display_bhp, (800, 0))
     if a_attack:
         screen.blit(test.image, test.rect)
     if b_attack:
