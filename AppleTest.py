@@ -23,11 +23,8 @@ class Apple:
             self.x = self.x + self.delta
         if direction == "left":
             self.x = self.x - self.delta
-        if direction == "jump":
-            if self.y != 70:
-                self.y = self.y - self.delta
-            if self.y >= 70:
-                self.y = self.y + self.delta
-            # if self.y < 150:
-            #     self.y = 150
-        self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
+        # if direction == "jump":
+        #         self.y -= self.delta
+        #     # if self.y == 80:
+        #     #     self.y += self.delta
+

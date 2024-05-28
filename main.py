@@ -15,11 +15,13 @@ screen = pygame.display.set_mode(size)
 start_time = time.time()
 current_time = 0
 
+# SPRITES
 test = Test(50,50)
 test2 = Test(350, 50)
 apple = Apple(50,150)
 banana = Banana(400, 150)
 
+# VARIABLES
 game_start = False
 a_attack = False
 a_attack_cd = False
@@ -37,14 +39,13 @@ a_move = True
 b_move = True
 a_hit = False
 b_hit = False
-
+run = True
+jump = False
 
 
 display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
 display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
 
-
-run = True
 
 while run:
     current_time = round((time.time() - start_time), 2)
@@ -53,6 +54,7 @@ while run:
     test2 = Test(banana.x - 250, 200)
     keys = pygame.key.get_pressed()
 
+    # APPLE MOVEMENT
     if a_move:
         if keys[pygame.K_d]:
             apple.move_direction("right")
@@ -61,6 +63,7 @@ while run:
         if keys[pygame.K_w]:
             apple.move_direction("jump")
 
+    # BANANA MOVEMENT
     if b_move:
         if keys[pygame.K_RIGHT]:
             banana.move_direction("right")
@@ -77,38 +80,39 @@ while run:
             elif keys[pygame.K_m]:
                 b_attack = True
 
-
+# APPLE ATTACK
     if a_attack:
         cd += 1
         a_move = False
         if test.rect.colliderect(banana.rect):
             b_move = False
             b_hit = True
-        if b_hit:
-            b_hp -= 5
-            display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
-            b_hit = False
         if cd >= 150:
             a_attack = False
             a_move = True
             b_move = True
             cd = 0
+    if b_hit and not a_attack:
+        b_hp -= 5
+        display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
+        b_hit = False
 
+# BANANA ATTACK
     if b_attack:
         cd2 += 1
         b_move = False
         if test2.rect.colliderect(apple.rect):
             a_move = False
             a_hit = True
-        if a_hit:
-            a_hp -= 5
-            display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
-            screen.blit(display_ahp, (0, 0))
         if cd2 >= 150:
             b_attack = False
             b_move = True
             a_move = True
             cd2 = 0
+    if a_hit and not b_attack:
+        a_hp -= 5
+        display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
+        a_hit = False
 
 
     screen.fill((0, 0, 0))
