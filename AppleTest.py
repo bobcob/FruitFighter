@@ -18,7 +18,6 @@ class Apple:
         self.image = pygame.transform.scale(self.image, scale_size)
 
     def move_direction(self, direction):
-
         if direction == "right":
             self.x = self.x + self.delta
         if direction == "left":
@@ -27,4 +26,4 @@ class Apple:
         #         self.y -= self.delta
         #     # if self.y == 80:
         #     #     self.y += self.delta
-
+        self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
