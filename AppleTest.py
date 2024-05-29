@@ -1,5 +1,4 @@
 import pygame
-import time
 
 class Apple:
 
@@ -20,8 +19,12 @@ class Apple:
     def move_direction(self, direction):
         if direction == "right":
             self.x = self.x + self.delta
+            if self.x >= 900:
+                self.x = 900
         if direction == "left":
             self.x = self.x - self.delta
+            if self.x <= 0:
+                self.x = 0
         # if direction == "jump":
         #         self.y -= self.delta
         #     # if self.y == 80:
