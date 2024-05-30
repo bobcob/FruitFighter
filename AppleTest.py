@@ -1,15 +1,16 @@
 import pygame
 
 class Apple:
-
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = pygame.image.load("apple.png")
+        self.image_list = ["apple.png", "button.png"]
+        self.image = pygame.image.load(self.image_list[0])
         self.rescale_image(self.image)
         self.image_size = self.image.get_size()
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
         self.delta = 1
+        self.duck = False
 
     def rescale_image(self, image):
         self.image_size = self.image.get_size()
@@ -26,7 +27,20 @@ class Apple:
             if self.x <= 0:
                 self.x = 0
         # if direction == "jump":
-        #         self.y -= self.delta
-        #     # if self.y == 80:
-        #     #     self.y += self.delta
+        #     self.y =
+        if direction == "duck":
+            self.duck = True
+            self.ducking()
+
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
+
+    def ducking(self):
+        image_number = 1
+        if not self.duck:
+            image_number = 0
+        self.image = pygame.image.load(self.image_list[image_number])
+        self.rescale_image(self.image)
+        self.image_size = self.image.get_size()
+        self.duck = not self
+
+

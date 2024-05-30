@@ -42,6 +42,8 @@ run = True
 jump = False
 start = False
 color = (255,0,0)
+ducking = False
+
 
 display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
 display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
@@ -62,6 +64,10 @@ while run:
                 apple.move_direction("left")
             if keys[pygame.K_w]:
                 apple.move_direction("jump")
+            if keys[pygame.K_s]:
+                ducking = True
+            if not(keys[pygame.K_s]):
+                ducking = False
 
         # BANANA MOVEMENT
         if b_move:
@@ -117,6 +123,12 @@ while run:
                 a_attack = True
             elif keys[pygame.K_m] and start:
                 b_attack = True
+        if event.type == pygame.KEYDOWN:
+            if ducking:
+                apple.move_direction("duck")
+
+
+
 
     screen.fill((0, 0, 0))
     if start:
