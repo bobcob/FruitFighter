@@ -42,15 +42,13 @@ run = True
 jump = False
 start = False
 color = (255,0,0)
-clock = pygame.time.Clock()
-
 
 display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
 display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
 
 
 while run:
-    clock.tick(360)
+    clock = pygame.time.Clock()
     keys = pygame.key.get_pressed()
     if start:
 
@@ -61,11 +59,11 @@ while run:
         if a_move:
             if keys[pygame.K_d]:
                 apple.move_direction("right")
-            if keys[pygame.K_a]:
+            elif keys[pygame.K_a]:
                 apple.move_direction("left")
-            if keys[pygame.K_w]:
+            elif keys[pygame.K_w]:
                 apple.move_direction("jump")
-            if keys[pygame.K_s]:
+            elif keys[pygame.K_s]:
                 apple.move_direction("duck")
             else:
                 apple.move_direction("idle")
@@ -74,11 +72,11 @@ while run:
         if b_move:
             if keys[pygame.K_RIGHT]:
                 banana.move_direction("right")
-            if keys[pygame.K_LEFT]:
+            elif keys[pygame.K_LEFT]:
                 banana.move_direction("left")
-            if keys[pygame.K_UP]:
+            elif keys[pygame.K_UP]:
                 banana.move_direction("jump")
-            if keys[pygame.K_DOWN]:
+            elif keys[pygame.K_DOWN]:
                 banana.move_direction("duck")
             else:
                 banana.move_direction("idle")
@@ -140,7 +138,7 @@ while run:
     if start:
         screen.blit(apple.image, apple.rect)
         screen.blit(banana.image, banana.rect)
-        screen.blit(display_ahp, (0,0))
+        screen.blit(display_ahp, (0, 0))
         screen.blit(display_bhp, (800, 0))
         if a_attack:
             screen.blit(test.image, test.rect)
@@ -148,6 +146,8 @@ while run:
             screen.blit(test2.image, test2.rect)
     else:
         screen.blit(button.image, button.rect)
+
+    clock.tick(360)
 
     pygame.display.update()
 

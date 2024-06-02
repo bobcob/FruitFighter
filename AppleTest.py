@@ -9,8 +9,7 @@ class Apple:
         self.rescale_image(self.image)
         self.image_size = self.image.get_size()
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
-        self.delta = 5
-        self.duck = False
+        self.delta = 2
 
     def rescale_image(self, image):
         self.image_size = self.image.get_size()
@@ -22,21 +21,19 @@ class Apple:
             self.x = self.x + self.delta
             if self.x >= 900:
                 self.x = 900
-        if direction == "left":
+        elif direction == "left":
             self.x = self.x - self.delta
             if self.x <= 0:
                 self.x = 0
-        # if direction == "jump":
+        # elif direction == "jump":
         #     self.y =
-        if direction == "duck":
-            image_number = 1
-            self.image = pygame.image.load(self.image_list[image_number])
-        if direction == "idle":
-            image_number = 0
-            self.image = pygame.image.load(self.image_list[image_number])
+        elif direction == "duck":
+            self.image = pygame.image.load(self.image_list[1])
+        elif direction == "idle":
+            self.image = pygame.image.load(self.image_list[0])
             self.rescale_image(self.image)
-            self.image_size = self.image.get_size()
 
+        self.image_size = self.image.get_size()
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
 
 
