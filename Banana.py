@@ -17,7 +17,6 @@ class Banana:
     #     self.image = pygame.transform.scale(self.image, scale_size)
 
     def move_direction(self, direction):
-
         if direction == "right":
             self.x = self.x + self.delta
             if self.x >= 900:

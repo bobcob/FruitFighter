@@ -39,8 +39,11 @@ b_move = True
 a_hit = False
 b_hit = False
 run = True
-jump = False
+a_jump = False
+b_jump = False
 start = False
+a_jumpCount = 10
+b_jumpCount = 10
 color = (255,0,0)
 
 display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
@@ -61,12 +64,18 @@ while run:
                 apple.move_direction("right")
             elif keys[pygame.K_a]:
                 apple.move_direction("left")
-            elif keys[pygame.K_w]:
-                apple.move_direction("jump")
             elif keys[pygame.K_s]:
                 apple.move_direction("duck")
             else:
                 apple.move_direction("idle")
+        # if a_jump:
+        #     if a_jumpCount >= -10:
+        #         apple.y -= (a_jumpCount * abs(a_jumpCount)) * 0.5
+        #         a_jumpCount -= 1
+        #     else:
+        #         a_jumpCount = 10
+        #         a_jump = False
+
 
         # BANANA MOVEMENT
         if b_move:
@@ -74,12 +83,18 @@ while run:
                 banana.move_direction("right")
             elif keys[pygame.K_LEFT]:
                 banana.move_direction("left")
-            elif keys[pygame.K_UP]:
-                banana.move_direction("jump")
             elif keys[pygame.K_DOWN]:
                 banana.move_direction("duck")
             else:
                 banana.move_direction("idle")
+
+        if b_jump:
+            if b_jumpCount >= -10:
+                banana.y -= (b_jumpCount * abs(b_jumpCount)) * 0.5
+                b_jumpCount -= 1
+            else:
+                b_jumpCount = 10
+                b_jump = False
 
     # APPLE ATTACK
         if a_attack:
@@ -116,6 +131,7 @@ while run:
             a_hit = False
 
 
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -128,9 +144,12 @@ while run:
                 a_attack = True
             elif keys[pygame.K_m] and start:
                 b_attack = True
+            elif keys[pygame.K_w]:   #apple jump
+                a_jump = True
+            elif keys[pygame.K_UP]:     #banana jump
+                b_jump = True
         # if event.type == pygame.KEYDOWN and keys[pygame.K_s]:
         #     apple.move_direction("duck")
-
 
 
 
