@@ -1,7 +1,7 @@
 
 import pygame
 from Test import Test
-from AppleTest import Apple
+from Apple import Apple
 from Banana import Banana
 from Button import Button
 
@@ -42,6 +42,7 @@ run = True
 a_jump = False
 b_jump = False
 start = False
+frame = 0
 a_jumpCount = 10
 b_jumpCount = 10
 color = (255,0,0)
@@ -68,13 +69,15 @@ while run:
                 apple.move_direction("duck")
             else:
                 apple.move_direction("idle")
-        # if a_jump:
-        #     if a_jumpCount >= -10:
-        #         apple.y -= (a_jumpCount * abs(a_jumpCount)) * 0.5
-        #         a_jumpCount -= 1
-        #     else:
-        #         a_jumpCount = 10
-        #         a_jump = False
+                if frame % 12 == 0:
+                    apple.switch_image()
+        if a_jump:
+            if a_jumpCount >= -10:
+                apple.y -= (a_jumpCount * abs(a_jumpCount)) * 0.5
+                a_jumpCount -= 1
+            else:
+                a_jumpCount = 10
+                a_jump = False
 
 
         # BANANA MOVEMENT
@@ -87,6 +90,8 @@ while run:
                 banana.move_direction("duck")
             else:
                 banana.move_direction("idle")
+                if frame % 12 == 0:
+                    banana.switch_image()
 
         if b_jump:
             if b_jumpCount >= -10:
@@ -98,6 +103,7 @@ while run:
 
     # APPLE ATTACK
         if a_attack:
+            apple.x += 3
             cd += 1
             a_move = False
             if test.rect.colliderect(banana.rect):
@@ -148,12 +154,9 @@ while run:
                 a_jump = True
             elif keys[pygame.K_UP]:     #banana jump
                 b_jump = True
-        # if event.type == pygame.KEYDOWN and keys[pygame.K_s]:
-        #     apple.move_direction("duck")
 
 
-
-    screen.fill((0, 0, 0))
+    screen.fill((0, 208, 255))
     if start:
         screen.blit(apple.image, apple.rect)
         screen.blit(banana.image, banana.rect)
@@ -166,9 +169,11 @@ while run:
     else:
         screen.blit(button.image, button.rect)
 
-    clock.tick(360)
+    clock.tick(60)
 
     pygame.display.update()
+
+    frame += 1
 
 # Once we have exited the main program loop we can stop the game engine:
 pygame.quit()
