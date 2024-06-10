@@ -72,6 +72,7 @@ while run:
                 if frame % 12 == 0:
                     apple.switch_image()
         if a_jump:
+            apple.move_direction("jump")
             if a_jumpCount >= -10:
                 apple.y -= (a_jumpCount * abs(a_jumpCount)) * 0.5
                 a_jumpCount -= 1
@@ -94,6 +95,7 @@ while run:
                     banana.switch_image()
 
         if b_jump:
+            banana.move_direction("jump")
             if b_jumpCount >= -10:
                 banana.y -= (b_jumpCount * abs(b_jumpCount)) * 0.5
                 b_jumpCount -= 1
@@ -103,13 +105,13 @@ while run:
 
     # APPLE ATTACK
         if a_attack:
-            apple.x += 3
+            apple.move_direction("attack")
             cd += 1
             a_move = False
             if test.rect.colliderect(banana.rect):
                 b_move = False
                 b_hit = True
-            if cd >= 150:
+            if cd >= 30:
                 a_attack = False
                 a_move = True
                 b_move = True
@@ -121,12 +123,13 @@ while run:
 
     # BANANA ATTACK
         if b_attack:
+            banana.move_direction("attack")
             cd2 += 1
             b_move = False
             if test2.rect.colliderect(apple.rect):
                 a_move = False
                 a_hit = True
-            if cd2 >= 150:
+            if cd2 >= 30:
                 b_attack = False
                 b_move = True
                 a_move = True
