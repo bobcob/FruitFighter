@@ -1,4 +1,3 @@
-
 import pygame
 from Hitbox import Hitbox
 from Apple import Apple
@@ -7,18 +6,20 @@ from Button import Button
 
 pygame.init()
 pygame.font.init()
-my_font = pygame.font.SysFont('Arial', 15)
+start_end_font = pygame.font.SysFont('Papyrus', 48)
+hp_font = pygame.font.SysFont('Papyrus', 32)
 pygame.display.set_caption("Fruit Fighter")
 
 size = (1000, 600)
 screen = pygame.display.set_mode(size)
 
 # SPRITES
-apple_box = Hitbox(50,50)
-banana_box = Hitbox(350, 50)
-apple = Apple(50,150)
-banana = Banana(400, 150)
+apple_box = Hitbox(0, 0)
+banana_box = Hitbox(0, 0)
+apple = Apple(50,320)
+banana = Banana(700, 305)
 button = Button(375, 150)
+bg = pygame.image.load("bg.png")
 
 # VARIABLES
 a_attack = False
@@ -29,10 +30,6 @@ a_hp = 100
 b_hp = 100
 cd = 0
 cd2 = 0
-stun = 0
-stun2 = 0
-hit = False
-hit2 = False
 a_move = True
 b_move = True
 a_hit = False
@@ -42,21 +39,33 @@ a_jump = False
 b_jump = False
 start = False
 game_over = False
+a_win = False
+b_win = False
 frame = 0
 a_jumpCount = 10
 b_jumpCount = 10
 color = (255,0,0)
 
-display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
-display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
-
+# TEXT
+display_start = start_end_font.render("TOUCH LEMONT", True, (255, 0, 0))
+display_ahp = hp_font.render("APPLE: " + str(a_hp), True, (0, 0, 0))
+display_bhp = hp_font.render("BANANA: " + str(b_hp), True, (0, 0, 0))
+display_a_win = start_end_font.render("APPLE WINS", True, (0, 0, 0))
+display_b_win = start_end_font.render("BANANA WINS", True, (0, 0, 0))
 
 while run:
     clock = pygame.time.Clock()
     keys = pygame.key.get_pressed()
     if start and not game_over:
-        apple_box = Hitbox(apple.x + 300, 200)
-        banana_box = Hitbox(banana.x - 250, 200)
+        apple_box = Hitbox(apple.x + 150, 375)
+        banana_box = Hitbox(banana.x - 25, 350)
+        if a_hp <= 0:
+            b_win = True
+            game_over = True
+        if b_hp <= 0:
+            a_win = True
+            game_over = True
+
 
         # APPLE MOVEMENT
         if a_move:
@@ -118,7 +127,7 @@ while run:
                 cd = 0
         if b_hit and not a_attack:
             b_hp -= 5
-            display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
+            display_bhp = hp_font.render("BANANA: " + str(b_hp), True, (0, 0, 0))
             b_hit = False
 
     # BANANA ATTACK
@@ -136,11 +145,9 @@ while run:
                 cd2 = 0
         if a_hit and not b_attack:
             a_hp -= 5
-            display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
+            display_ahp = hp_font.render("APPLE: " + str(a_hp), True, (0, 0, 0))
             a_hit = False
 
-        # if a_hp or b_hp == -1:
-        #     game_over = True
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -160,18 +167,21 @@ while run:
                 b_jump = True
 
 
-    screen.fill((0, 208, 255))
-    if start and not game_over:
-        screen.blit(apple.image, apple.rect)
-        screen.blit(banana.image, banana.rect)
-        screen.blit(display_ahp, (0, 0))
-        screen.blit(display_bhp, (800, 0))
-        if a_attack:
-            screen.blit(apple_box.image, apple_box.rect)
-        if b_attack:
-            screen.blit(banana_box.image, banana_box.rect)
-    else:
-        screen.blit(button.image, button.rect)
+    screen.blit(bg, (0, 0))
+    if not game_over:
+        if start:
+            screen.blit(apple.image, apple.rect)
+            screen.blit(banana.image, banana.rect)
+            screen.blit(display_ahp, (0, 0))
+            screen.blit(display_bhp, (700, 0))
+        else:
+            screen.blit(button.image, button.rect)
+            screen.blit(display_start, (250, 125))
+    if game_over:
+        if a_win:
+            screen.blit(display_a_win, (250, 150))
+        if b_win:
+            screen.blit(display_b_win, (250, 150))
 
     clock.tick(60)
 

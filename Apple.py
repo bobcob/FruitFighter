@@ -20,11 +20,11 @@ class Apple:
 
     def move_direction(self, direction):
         # DIRECTION FACING
-        if self.current_direction == "right" and direction == "left":
-            self.image = pygame.transform.flip(self.image, True, False)
-
-        if self.current_direction == "left" and direction == "right":
-            self.image = pygame.transform.flip(self.image, True, False)
+        # if self.current_direction == "right" and direction == "left":
+        #     self.image = pygame.transform.flip(self.image, True, False)
+        #
+        # if self.current_direction == "left" and direction == "right":
+        #     self.image = pygame.transform.flip(self.image, True, False)
         # MOVEMENT
         if direction == "right":
             self.current_direction = "right"
