@@ -1,6 +1,6 @@
 
 import pygame
-from Test import Test
+from Hitbox import Hitbox
 from Apple import Apple
 from Banana import Banana
 from Button import Button
@@ -14,14 +14,13 @@ size = (1000, 600)
 screen = pygame.display.set_mode(size)
 
 # SPRITES
-test = Test(50,50)
-test2 = Test(350, 50)
+apple_box = Hitbox(50,50)
+banana_box = Hitbox(350, 50)
 apple = Apple(50,150)
 banana = Banana(400, 150)
 button = Button(375, 150)
 
 # VARIABLES
-game_start = False
 a_attack = False
 a_attack_cd = False
 b_attack = False
@@ -42,6 +41,7 @@ run = True
 a_jump = False
 b_jump = False
 start = False
+game_over = False
 frame = 0
 a_jumpCount = 10
 b_jumpCount = 10
@@ -54,10 +54,9 @@ display_bhp = my_font.render(str(b_hp), True, (255, 255, 255))
 while run:
     clock = pygame.time.Clock()
     keys = pygame.key.get_pressed()
-    if start:
-
-        test = Test(apple.x + 300, 200)
-        test2 = Test(banana.x - 250, 200)
+    if start and not game_over:
+        apple_box = Hitbox(apple.x + 300, 200)
+        banana_box = Hitbox(banana.x - 250, 200)
 
         # APPLE MOVEMENT
         if a_move:
@@ -103,12 +102,13 @@ while run:
                 b_jumpCount = 10
                 b_jump = False
 
+
     # APPLE ATTACK
         if a_attack:
             apple.move_direction("attack")
             cd += 1
             a_move = False
-            if test.rect.colliderect(banana.rect):
+            if apple_box.rect.colliderect(banana.rect):
                 b_move = False
                 b_hit = True
             if cd >= 30:
@@ -126,7 +126,7 @@ while run:
             banana.move_direction("attack")
             cd2 += 1
             b_move = False
-            if test2.rect.colliderect(apple.rect):
+            if banana_box.rect.colliderect(apple.rect):
                 a_move = False
                 a_hit = True
             if cd2 >= 30:
@@ -139,7 +139,8 @@ while run:
             display_ahp = my_font.render(str(a_hp), True, (255, 255, 255))
             a_hit = False
 
-
+        # if a_hp or b_hp == -1:
+        #     game_over = True
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -160,15 +161,15 @@ while run:
 
 
     screen.fill((0, 208, 255))
-    if start:
+    if start and not game_over:
         screen.blit(apple.image, apple.rect)
         screen.blit(banana.image, banana.rect)
         screen.blit(display_ahp, (0, 0))
         screen.blit(display_bhp, (800, 0))
         if a_attack:
-            screen.blit(test.image, test.rect)
+            screen.blit(apple_box.image, apple_box.rect)
         if b_attack:
-            screen.blit(test2.image, test2.rect)
+            screen.blit(banana_box.image, banana_box.rect)
     else:
         screen.blit(button.image, button.rect)
 
