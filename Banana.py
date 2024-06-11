@@ -11,7 +11,7 @@ class Banana:
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
         self.delta = 10
         self.idle1 = True
-        self.current_direction = "left"
+        self.current_direction = "right"
 
     def rescale_image(self, image):
         self.image_size = self.image.get_size()
